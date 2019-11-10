@@ -1,8 +1,5 @@
 {
-  "done": [],
-  "in-progress": [],
-  "testing": [],
-  "todo": [
+  "done": [
     {
       "assignedTo": {
         "name": "Hanna Paranhos"
@@ -13,17 +10,25 @@
       "references": [],
       "title": "MARKDOWN",
       "type": "emergency"
-    },
+    }
+  ],
+  "in-progress": [
     {
       "assignedTo": {
         "name": "Hanna Paranhos"
       },
       "category": "Front",
       "creation_time": "2019-10-03T23:34:59.237Z",
+      "details": {
+        "content": "[] Limpar assets\n[] Definir fluxo de informação e páginas para cada sessão",
+        "mime": "text/markdown"
+      },
       "id": "2",
       "prio": 0,
       "references": [],
       "title": "Escolher template"
     }
-  ]
+  ],
+  "testing": [],
+  "todo": []
 }
