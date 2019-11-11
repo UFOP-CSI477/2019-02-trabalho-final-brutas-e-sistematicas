@@ -49,7 +49,7 @@ class Workers(models.Model):
     name     = models.CharField(max_length=24)
     surname  = models.CharField(max_length=30)
     email    = models.EmailField()
-    passwork = models.CharField(max_length=60)
+    passwork= models.CharField(max_length=60)
     adress   = models.ForeignKey(Adress, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
