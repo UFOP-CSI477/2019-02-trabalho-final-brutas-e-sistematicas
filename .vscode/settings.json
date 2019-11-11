@@ -1,4 +1,3 @@
 {
-    "python.pythonPath": "./venv/bin/python3.7",
-    "python.pipenvPath": "./venv/bin/pip3.7"
+    "python.pythonPath": "./py3/bin/python3.7"   
 }
