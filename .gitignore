@@ -1,7 +1,7 @@
 *_MACOSX
+.vscode/settings.json
 py3/*
 ./py3
-.vscode/settings.json
 .py3
 [Bb]in
 [Ii]nclude
@@ -9,4 +9,3 @@ py3/*
 [Ll]ib64
 [Ll]ocal
 [Ss]cripts
-.vscode/settings.json
