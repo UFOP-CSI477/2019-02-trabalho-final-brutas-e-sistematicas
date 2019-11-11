@@ -51,6 +51,7 @@ class Workers(models.Model):
     email    = models.EmailField()
     passwork= models.CharField(max_length=60)
     adress   = models.ForeignKey(Adress, on_delete=models.CASCADE)
+    countClick = models.IntegerField(blank=True,default=0)
 
     def save(self, *args, **kwargs):
         if len(self.cpf) != 11:
