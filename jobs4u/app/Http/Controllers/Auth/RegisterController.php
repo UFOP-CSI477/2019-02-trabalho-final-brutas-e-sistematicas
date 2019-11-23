@@ -49,7 +49,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'cpf' => ['required', 'unsigned', 'size:11', 'unique:users'],
+            'cpf' => ['required', 'size:11', 'unique:users'],
             'name' => ['required', 'string', 'max:255'],
             'surname' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -59,7 +59,7 @@ class RegisterController extends Controller
             'number' => ['required', 'max:4', 'integer'],
             'postal_code' => ['required', 'size:8', 'string'],
             'complment' => ['string', 'max:16'],
-            'city' => ['stirng', 'required', 'max:40'],
+            'city' => ['string', 'required', 'max:40'],
             'state' => ['required']
         ]);
     }
@@ -72,21 +72,24 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = [
             // Usuário
             'cpf' => $data['cpf'],
             'name' => $data['name'],
             'surname' => $data['surname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'description' => $data['description'],
             // Endereço 
             'street' => $data['street'],
             'number' => $data['number'],
-            'postal_code' => $data['cep'],
-            'complment' => $data['complement'],
+            'postal_code' => $data['postal_code'],
+            'complment' => $data['complment'],
             'city' => $data['city'],
             'state' => $data['state'],
-        ]);
+        ];
+        if(isset($data['description'])){
+            $user['description'] = $data['description'];
+        }
+        return User::create($user);
     }
 }

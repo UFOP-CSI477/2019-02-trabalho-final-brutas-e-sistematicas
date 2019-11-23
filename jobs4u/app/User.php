@@ -15,8 +15,10 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $primaryKey = 'cpf';
+
     protected $fillable = [
-        'name', 'email', 'password',
+        'cpf', 'name', 'surname', 'email', 'password', 'street', 'number', 'postal_code', 'complment', 'city', 'state', 'description', 'picture'
     ];
 
     /**

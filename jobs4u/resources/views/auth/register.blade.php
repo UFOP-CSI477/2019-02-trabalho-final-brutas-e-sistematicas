@@ -112,7 +112,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                                     </div>
-                                    <input class="form-control{{ $errors->has('number') ? ' is-invalid' : '' }}" placeholder="{{ __('number') }}" type="text" name="number" value="{{ old('number') }}" required>
+                                    <input class="form-control{{ $errors->has('number') ? ' is-invalid' : '' }}" placeholder="{{ __('Número') }}" type="text" name="number" value="{{ old('number') }}" required>
                                 </div>
                                 @if ($errors->has('number'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
@@ -169,7 +169,7 @@
                                         <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                                     </div>
                                     <select class="form-control{{ $errors->has('state') ? ' is-invalid' : '' }} " name="state">
-                                        <option value="MG">Minas Gerais</option>
+                                        <option value="Minas Gerais – MG">Minas Gerais</option>
                                         <option  value="SP">São Paulo</option>
                                     </select>
                                     

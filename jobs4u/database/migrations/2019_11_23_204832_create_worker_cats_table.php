@@ -15,7 +15,7 @@ class CreateWorkerCatsTable extends Migration
     {
         Schema::create('worker_cats', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('cpf_user')->unsigned()->length(11);
+            $table->bigInteger('cpf_user')->unsigned()->length(11);
             $table->bigInteger('id_cat')->unsigned();
             $table->timestamps();
         });

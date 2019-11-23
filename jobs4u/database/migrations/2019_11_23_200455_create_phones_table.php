@@ -17,7 +17,7 @@ class CreatePhonesTable extends Migration
             $table->bigIncrements('id');
             $table->string('number', 11);
             $table->boolean('isWP');
-            $table->integer('cpf_user')->unsigned()->length(11);
+            $table->bigInteger('cpf_user')->unsigned()->length(11);
             $table->timestamps();
             $table->foreign('cpf_user')->references('cpf')->on('users');
         });
