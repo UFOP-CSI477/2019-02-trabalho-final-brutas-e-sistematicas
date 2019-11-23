@@ -8,7 +8,7 @@
 
 ### Resumo
 
-  O objetivo deste documento é apresentar uma proposta para o trabalho a ser desenvolvido na disciplina CSI477 -- Sistemas WEB I. O sistema <!--Inserir nome do nosso sistema--> será uma plataforma para cadastrar prestadores de serviço nas categorias:
+  O objetivo deste documento é apresentar uma proposta para o trabalho a ser desenvolvido na disciplina CSI477 -- Sistemas WEB I. O sistema Jobs4u será uma plataforma para cadastrar prestadores de serviço nas categorias:
   <ol>
     <li>Aluguel de Brinquedos</li>
     <li>Contrução Civil</li>
