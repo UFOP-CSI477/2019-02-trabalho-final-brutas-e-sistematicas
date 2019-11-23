@@ -49,9 +49,18 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'cpf' => ['required', 'unsigned', 'size:11', 'unique:users'],
             'name' => ['required', 'string', 'max:255'],
+            'surname' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'description' => ['max:800', 'string'],
+            'street' => ['required', 'max:45', 'string'],
+            'number' => ['required', 'max:4', 'integer'],
+            'postal_code' => ['required', 'size:8', 'string'],
+            'complment' => ['string', 'max:16'],
+            'city' => ['stirng', 'required', 'max:40'],
+            'state' => ['required']
         ]);
     }
 
@@ -64,9 +73,20 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
+            // Usuário
+            'cpf' => $data['cpf'],
             'name' => $data['name'],
+            'surname' => $data['surname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'description' => $data['description'],
+            // Endereço 
+            'street' => $data['street'],
+            'number' => $data['number'],
+            'postal_code' => $data['cep'],
+            'complment' => $data['complement'],
+            'city' => $data['city'],
+            'state' => $data['state'],
         ]);
     }
 }
