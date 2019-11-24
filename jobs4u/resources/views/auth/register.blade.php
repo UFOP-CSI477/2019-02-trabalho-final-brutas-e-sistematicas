@@ -19,7 +19,7 @@
                             <div class="form-group{{ $errors->has('cpf') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                     </div>
                                     <input class="form-control{{ $errors->has('cpf') ? ' is-invalid' : '' }}" placeholder="{{ __('CPF') }}" type="text" name="cpf" value="{{ old('cpf') }}" required autofocus>
                                 </div>
@@ -95,10 +95,24 @@
                                 </div>
                             </div>
 
+                            <div class="form-group{{ $errors->has('postal_code') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-map-signs"></i></span>
+                                    </div>
+                                    <input class="form-control{{ $errors->has('postal_code') ? ' is-invalid' : '' }}" placeholder="{{ __('CEP') }}" type="text" name="postal_code" value="{{ old('postal_code') }}" required >
+                                </div>
+                                @if ($errors->has('postal_code'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('postal_code') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
                             <div class="form-group{{ $errors->has('street') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-road"></i></i></span>
                                     </div>
                                     <input class="form-control{{ $errors->has('street') ? ' is-invalid' : '' }}" placeholder="{{ __('Rua, Avenida, Esquina...') }}" type="text" name="street" value="{{ old('street') }}" required >
                                 </div>
@@ -112,7 +126,7 @@
                             <div class="form-group{{ $errors->has('number') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-inbox"></i></span>
                                     </div>
                                     <input class="form-control{{ $errors->has('number') ? ' is-invalid' : '' }}" placeholder="{{ __('Número') }}" type="text" name="number" value="{{ old('number') }}" required>
                                 </div>
@@ -122,25 +136,10 @@
                                     </span>
                                 @endif
                             </div>
-
-                            <div class="form-group{{ $errors->has('postal_code') ? ' has-danger' : '' }}">
-                                <div class="input-group input-group-alternative mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                                    </div>
-                                    <input class="form-control{{ $errors->has('postal_code') ? ' is-invalid' : '' }}" placeholder="{{ __('CEP') }}" type="text" name="postal_code" value="{{ old('postal_code') }}" required >
-                                </div>
-                                @if ($errors->has('postal_code'))
-                                    <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('postal_code') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
                             <div class="form-group{{ $errors->has('complment') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-street-view"></i></span>
                                     </div>
                                     <input class="form-control{{ $errors->has('complment') ? ' is-invalid' : '' }}" placeholder="{{ __('Complemento') }}" type="text" name="complment" value="{{ old('complment') }}">
                                 </div>
@@ -154,7 +153,7 @@
                             <div class="form-group{{ $errors->has('city') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
                                     </div>
                                     <input class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" placeholder="{{ __('Cidade') }}" type="text" name="city" value="{{ old('city') }}">
                                 </div>
@@ -168,11 +167,11 @@
                             <div class="form-group{{ $errors->has('state') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                                        <span class="input-group-text"><i class="far fa-globe-africa"></i></span>
                                     </div>
                                     <select class="form-control{{ $errors->has('state') ? ' is-invalid' : '' }} " name="state">
                                         @foreach ($estados as $estado)
-                                        <option value="__({{explode(" – ", $estado)[1]}})">{{explode(" – ", $estado)[0]}}</option>
+                                            <option value="{{explode(" – ", $estado)[1]}}">{{explode(" – ", $estado)[0]}}</option>
                                         @endforeach
                                     </select>
                                     
@@ -205,4 +204,27 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+<script>
+    $('input[name="postal_code"]').change(event=>{
+        var cep = event.currentTarget.value;
+        var xmlReq = new XMLHttpRequest();
+        xmlReq.open('GET', `https://viacep.com.br/ws/${cep}/json/`);
+        xmlReq.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                infos = JSON.parse(xmlReq.responseText);
+                try{
+                    $('input[name="street"]').val(infos.logradouro);
+                    $('input[name="city"]').val(infos.localidade);
+                    $('select[name="state"]').val(infos.uf).change();
+                }catch (erro){
+                    console.error(erro)
+                }
+            }
+        }
+        xmlReq.send();
+    })
+</script>
 @endsection
