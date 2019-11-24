@@ -19,14 +19,14 @@ class CreateUsersTable extends Migration
             $table->string('surname');
             $table->string('email')->unique();
             $table->string('password');
-            $table->text('picture', 300);
+            $table->text('picture', 300)->nullable();
             $table->text('description')->nullable();
             $table->string('street', 45);
             $table->integer('number')->length(4);
             $table->string('postal_code', 8);
             $table->string('complment', 16)->nullable();
             $table->string('city', 40);
-            $table->enum('state', ['Acre – AC', 'Alagoas – AL', 'Amapá – AP', 'Amazonas – AM', 'Bahia – BA', 'Ceará – CE', 'Distrito Federal – DF', 'Espírito Santo – ES', 'Goiás – GO', 'Maranhão – MA', 'Mato Grosso – MT', 'Mato Grosso do Sul – MS', 'Minas Gerais – MG', 'Pará – PA', 'Paraíba – PB', 'Paraná – PR', 'Pernambuco – PE', 'Piauí – PI', 'Roraima – RR', 'Rondônia – RO', 'Rio de Janeiro – RJ', 'Rio Grande do Norte – RN', 'Rio Grande do Sul – RS', 'Santa Catarina – SC', 'São Paulo – SP', 'Sergipe – SE', 'Tocantins – TO']);
+            $table->enum('state', ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RR','RO','RJ','RN','RS','SC','SP','SE','TO']);
             $table->rememberToken()->nullable();
             $table->timestamps();
             $table->index('cpf');

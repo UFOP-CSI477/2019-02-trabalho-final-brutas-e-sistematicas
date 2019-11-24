@@ -1,5 +1,7 @@
 @extends('layouts.app', ['class' => 'bg-default'])
-
+@php
+    $estados = array('Acre – AC', 'Alagoas – AL', 'Amapá – AP', 'Amazonas – AM', 'Bahia – BA', 'Ceará – CE', 'Distrito Federal – DF', 'Espírito Santo – ES', 'Goiás – GO', 'Maranhão – MA', 'Mato Grosso – MT', 'Mato Grosso do Sul – MS', 'Minas Gerais – MG', 'Pará – PA', 'Paraíba – PB', 'Paraná – PR', 'Pernambuco – PE', 'Piauí – PI', 'Roraima – RR', 'Rondônia – RO', 'Rio de Janeiro – RJ', 'Rio Grande do Norte – RN', 'Rio Grande do Sul – RS', 'Santa Catarina – SC', 'São Paulo – SP', 'Sergipe – SE', 'Tocantins – TO')
+@endphp
 @section('content')
     @include('layouts.headers.guest')
 
@@ -169,8 +171,9 @@
                                         <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                                     </div>
                                     <select class="form-control{{ $errors->has('state') ? ' is-invalid' : '' }} " name="state">
-                                        <option value="Minas Gerais – MG">Minas Gerais</option>
-                                        <option  value="SP">São Paulo</option>
+                                        @foreach ($estados as $estado)
+                                        <option value="__({{explode(" – ", $estado)[1]}})">{{explode(" – ", $estado)[0]}}</option>
+                                        @endforeach
                                     </select>
                                     
                                 </div>
