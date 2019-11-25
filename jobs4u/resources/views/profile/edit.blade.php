@@ -18,7 +18,7 @@
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
                                 <a href="#">
-                                    <img src="{{ asset('argon') }}/img/theme/team-4-800x800.jpg" class="rounded-circle">
+                                    <img src="{{ '../' . auth()->user()->picture }}" class="rounded-circle">
                                 </a>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
+                        <form method="post" action="{{ route('profile.update') }}" autocomplete="off" enctype="multipart/form-data">
                             @csrf
                             @method('put')
 
@@ -128,15 +128,15 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('picture') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-picture">{{ __('Foto') }}</label>
-                                        <input type="file" name="picture" id="input-picture" class="form-control form-control-alternative{{ $errors->has('picture') ? ' is-invalid' : '' }}" placeholder="{{ __('Foto') }}" value="{{ old('picture', auth()->user()->picture) }}" required>
+                                    <label class="form-control-label" for="input-picture">{{ __('Foto') }}</label>
+                                    <input type="file" name="picture" id="input-picture" class="form-control">
 
-                                        @if ($errors->has('picture'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('picture') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
+                                    @if ($errors->has('picture'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('picture') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
 
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success mt-4">{{ __('Salvar') }}</button>
@@ -165,11 +165,35 @@
                                     
                                     <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-description">{{ __('Descrição') }}</label>
-                                        <input type="text" name="description" id="input-description" class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}" placeholder="{{ __('Conte um pouquinho sobre você e o que você faz!!!') }}" value="{{ old('description', auth()->user()->description) }}" required>
+                                        <textarea rows="6" name="description" id="input-description" class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}" placeholder="{{ __('Conte um pouquinho sobre você e o que você faz!!!') }}" value="{{ old('description', auth()->user()->description) }}"></textarea>
     
                                         @if ($errors->has('description'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('description') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+
+                                </div>
+                                <div class="pl-lg-4">
+                                    
+                                    <div class="form-group{{ $errors->has('category') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-description">{{ __('Categorias') }}</label>
+                                        <h5 class="form-control-text">
+                                            Selecione as categorias que se encaixam no seu perfil de prestação de serviço
+                                        </h5>
+
+                                        <select name="catgory" id="" class="form-control">
+                                            @foreach ($categorias as $c)
+                                                <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        {{-- <input type="text" name="description" id="input-description" class="form-control form-control-alternative{{ $errors->has('category') ? ' is-invalid' : '' }}" placeholder="{{ __('') }}" value="{{ old('description', auth()->user()->description) }}" required> --}}
+    
+                                        @if ($errors->has('category'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('category') }}</strong>
                                             </span>
                                         @endif
                                     </div>
