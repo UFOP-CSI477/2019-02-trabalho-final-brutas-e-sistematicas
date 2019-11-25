@@ -6,6 +6,7 @@
             <div class="header-body text-center mt-7 mb-7">
                 <div class="row justify-content-center">
                     <div class="col-lg-5 col-md-6">
+                        {{-- #TODO Criar View Welcolme => Busca de prestadores de serviço por proximidade e tipo de serviço desejado --}}
                         <h1 class="text-white">{{ __('Jobs4U') }}</h1>
                     </div>
                 </div>
