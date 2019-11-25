@@ -83,9 +83,9 @@
 
                             <h6 class="heading-small text-muted mb-4">{{ __('Informação do Usuário') }}</h6>
                             
-                            @if (session('status'))
+                            @if (session('perfil'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    {{ session('status') }}
+                                    {{ session('perfil') }}
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -165,8 +165,9 @@
                                     
                                     <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-description">{{ __('Descrição') }}</label>
-                                        <textarea rows="6" name="description" id="input-description" class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}" placeholder="{{ __('Conte um pouquinho sobre você e o que você faz!!!') }}" value="{{ old('description', auth()->user()->description) }}"></textarea>
-    
+                                        <textarea rows="6" name="description" id="input-description" class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}" placeholder="{{ old('description', auth()->user()->description) }}"></textarea>
+                                        <input type="hidden" name="name" value="{{ auth()->user()->name }}">
+                                        <input type="hidden" name="email" value="{{ auth()->user()->email }}">
                                         @if ($errors->has('description'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('description') }}</strong>

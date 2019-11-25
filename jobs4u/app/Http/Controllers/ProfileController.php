@@ -49,7 +49,7 @@ class ProfileController extends Controller
             }
         }else{
             auth()->user()->update($request->all());
-            return redirect('profile')->withStatus(__('Perfil Atualizado com Sucesso'));
+            return redirect('profile')->with('perfil', 'Perfil Atualizado com Sucesso');
         }
     }
 
