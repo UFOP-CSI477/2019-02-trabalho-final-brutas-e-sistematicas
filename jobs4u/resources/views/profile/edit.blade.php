@@ -83,9 +83,9 @@
 
                             <h6 class="heading-small text-muted mb-4">{{ __('Informação do Usuário') }}</h6>
                             
-                            @if (session('perfil'))
+                            @if (session('status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    {{ session('perfil') }}
+                                    {{ session('status') }}
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -152,14 +152,14 @@
     
                                 <h6 class="heading-small text-muted mb-4">{{ __('Informação do Job') }}</h6>
                                 
-                                @if (session('status'))
+                                {{-- @if (session('status'))
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                                         {{ session('status') }}
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                @endif
+                                @endif --}}
     
                                 <div class="pl-lg-4">
                                     
@@ -214,18 +214,21 @@
         
                                     <h6 class="heading-small text-muted mb-4">{{ __('Endereço') }}</h6>
                                     
-                                    @if (session('status'))
+                                    {{-- @if (session('status'))
                                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                                             {{ session('status') }}
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                    @endif
+                                    @endif --}}
+                                    
         
                                     <div class="pl-lg-4">
                                         <div class="form-group{{ $errors->has('street') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-street">{{ __('Rua') }}</label>
+                                            <input type="hidden" name="name" value="{{ auth()->user()->name }}">
+                                            <input type="hidden" name="email" value="{{ auth()->user()->email }}">
                                             <input type="text" name="street" id="input-street" class="form-control form-control-alternative{{ $errors->has('street') ? ' is-invalid' : '' }}" placeholder="{{ __('Rua') }}" value="{{ old('street', auth()->user()->street) }}" required >
         
                                             @if ($errors->has('street'))
@@ -284,7 +287,7 @@
                                                             <label class="form-control-label" for="input-city">{{ __('Cidade') }}</label>
                                                             <select class="form-control{{ $errors->has('state') ? ' is-invalid' : '' }} " name="state">
                                                                     @foreach ($estados as $estado)
-                                                                    <option value="__({{explode(" – ", $estado)[1]}})">{{explode(" – ", $estado)[0]}}</option>
+                                                                    <option value="{{explode(" – ", $estado)[1]}}">{{explode(" – ", $estado)[0]}}</option>
                                                                     @endforeach
                                                                 </select>
 
