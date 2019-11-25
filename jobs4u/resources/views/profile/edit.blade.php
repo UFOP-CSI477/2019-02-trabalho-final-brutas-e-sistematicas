@@ -146,6 +146,70 @@
                         <hr class="my-4" />
 
                         <div class="card-body">
+                                <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
+                                    @csrf
+                                    @method('put')
+        
+                                    <h6 class="heading-small text-muted mb-4">{{ __('Telefone') }}</h6>
+                                 
+        
+                                    <div class="pl-lg-4">
+                                        
+                                        <div class="form-group{{ $errors->has('number') ? ' has-danger' : '' }}">
+                                                <label class="form-control-label" for="input-number">{{ __('Telefone') }}</label>
+                                                <input type="text" name="number" id="input-number" class="form-control form-control-alternative{{ $errors->has('number') ? ' is-invalid' : '' }}"  value="{{ old('surname', auth()->user()->number) }}" >
+                                                <input type="hidden" name="name" value="{{ auth()->user()->name }}">
+                                                <input type="hidden" name="email" value="{{ auth()->user()->email }}">
+                                            @if ($errors->has('number'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('number') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+    
+                                    </div>
+                                    
+        
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-success mt-4">{{ __('Salvar') }}</button>
+                                        </div>
+                                    </div>
+                                </form>
+    
+
+                        <div class="card-body">
+                                <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
+                                    @csrf
+                                    @method('put')
+        
+                                    <h6 class="heading-small text-muted mb-4">{{ __('Informação do Job') }}</h6>
+                                 
+        
+                                    <div class="pl-lg-4">
+                                        
+                                        <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="input-description">{{ __('Descrição') }}</label>
+                                            <textarea rows="6" name="description" id="input-description" class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}" placeholder="{{ old('description', auth()->user()->description) }}"></textarea>
+                                            <input type="hidden" name="name" value="{{ auth()->user()->name }}">
+                                            <input type="hidden" name="email" value="{{ auth()->user()->email }}">
+                                            @if ($errors->has('description'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('description') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+    
+                                    </div>
+                                    
+        
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-success mt-4">{{ __('Salvar') }}</button>
+                                        </div>
+                                    </div>
+                                </form>
+    
+
+                        <div class="card-body">
                             <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
                                 @csrf
                                 @method('put')
@@ -161,21 +225,7 @@
                                     </div>
                                 @endif --}}
     
-                                <div class="pl-lg-4">
-                                    
-                                    <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-description">{{ __('Descrição') }}</label>
-                                        <textarea rows="6" name="description" id="input-description" class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}" placeholder="{{ old('description', auth()->user()->description) }}"></textarea>
-                                        <input type="hidden" name="name" value="{{ auth()->user()->name }}">
-                                        <input type="hidden" name="email" value="{{ auth()->user()->email }}">
-                                        @if ($errors->has('description'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('description') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-
-                                </div>
+                                
                                 <div class="pl-lg-4">
                                     
                                     <div class="form-group{{ $errors->has('category') ? ' has-danger' : '' }}">
