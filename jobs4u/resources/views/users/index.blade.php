@@ -53,7 +53,7 @@
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    @if ($user->id != auth()->id())
+                                                    @if ($user->cpf != auth()->user()->cpf)
                                                         <form action="{{ route('user.destroy', $user) }}" method="post">
                                                             @csrf
                                                             @method('delete')
