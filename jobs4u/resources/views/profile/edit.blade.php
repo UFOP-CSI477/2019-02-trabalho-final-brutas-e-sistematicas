@@ -1,3 +1,6 @@
+@php
+    $estados = array('Acre – AC', 'Alagoas – AL', 'Amapá – AP', 'Amazonas – AM', 'Bahia – BA', 'Ceará – CE', 'Distrito Federal – DF', 'Espírito Santo – ES', 'Goiás – GO', 'Maranhão – MA', 'Mato Grosso – MT', 'Mato Grosso do Sul – MS', 'Minas Gerais – MG', 'Pará – PA', 'Paraíba – PB', 'Paraná – PR', 'Pernambuco – PE', 'Piauí – PI', 'Roraima – RR', 'Rondônia – RO', 'Rio de Janeiro – RJ', 'Rio Grande do Norte – RN', 'Rio Grande do Sul – RS', 'Santa Catarina – SC', 'São Paulo – SP', 'Sergipe – SE', 'Tocantins – TO')
+@endphp
 @extends('layouts.app', ['title' => __('User Profile')])
 
 @section('content')
@@ -69,15 +72,16 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <h3 class="col-12 mb-0">{{ __('Edit Profile') }}</h3>
+                            <h3 class="col-12 mb-0">{{ __('Editar Perfil') }}</h3>
                         </div>
                     </div>
+
                     <div class="card-body">
                         <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
                             @csrf
                             @method('put')
 
-                            <h6 class="heading-small text-muted mb-4">{{ __('User information') }}</h6>
+                            <h6 class="heading-small text-muted mb-4">{{ __('Informação do Usuário') }}</h6>
                             
                             @if (session('status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -89,9 +93,10 @@
                             @endif
 
                             <div class="pl-lg-4">
+
                                 <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-name">{{ __('Name') }}</label>
-                                    <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}" required autofocus>
+                                    <label class="form-control-label" for="input-name">{{ __('Nome') }}</label>
+                                    <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Nome') }}" value="{{ old('name', auth()->user()->name) }}" required >
 
                                     @if ($errors->has('name'))
                                         <span class="invalid-feedback" role="alert">
@@ -99,6 +104,18 @@
                                         </span>
                                     @endif
                                 </div>
+
+                                <div class="form-group{{ $errors->has('surname') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-surname">{{ __('Sobrenome') }}</label>
+                                        <input type="text" name="surname" id="input-surname" class="form-control form-control-alternative{{ $errors->has('surname') ? ' is-invalid' : '' }}" placeholder="{{ __('Sobrenome') }}" value="{{ old('surname', auth()->user()->surname) }}" required>
+    
+                                        @if ($errors->has('surname'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('surname') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+
                                 <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-email">{{ __('Email') }}</label>
                                     <input type="email" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email', auth()->user()->email) }}" required>
@@ -110,17 +127,162 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group{{ $errors->has('picture') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-picture">{{ __('Foto') }}</label>
+                                        <input type="file" name="picture" id="input-picture" class="form-control form-control-alternative{{ $errors->has('picture') ? ' is-invalid' : '' }}" placeholder="{{ __('Foto') }}" value="{{ old('picture', auth()->user()->picture) }}" required>
+
+                                        @if ($errors->has('picture'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('picture') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                                 </div>
                             </div>
                         </form>
                         <hr class="my-4" />
+
+                        <div class="card-body">
+                            <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
+                                @csrf
+                                @method('put')
+    
+                                <h6 class="heading-small text-muted mb-4">{{ __('Informação do Job') }}</h6>
+                                
+                                @if (session('status'))
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{ session('status') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
+    
+                                <div class="pl-lg-4">
+                                    
+                                    <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-description">{{ __('Descrição') }}</label>
+                                        <input type="text" name="description" id="input-description" class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}" placeholder="{{ __('Conte um pouquinho sobre você e o que você faz!!!') }}" value="{{ old('description', auth()->user()->description) }}" required>
+    
+                                        @if ($errors->has('description'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('description') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+    
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <hr class="my-4" />
+
+                            <div class="card-body">
+                                <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
+                                    @csrf
+                                    @method('put')
+        
+                                    <h6 class="heading-small text-muted mb-4">{{ __('Endereço') }}</h6>
+                                    
+                                    @if (session('status'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{ session('status') }}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
+        
+                                    <div class="pl-lg-4">
+                                        <div class="form-group{{ $errors->has('street') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="input-street">{{ __('Rua') }}</label>
+                                            <input type="text" name="street" id="input-street" class="form-control form-control-alternative{{ $errors->has('street') ? ' is-invalid' : '' }}" placeholder="{{ __('Rua') }}" value="{{ old('street', auth()->user()->street) }}" required >
+        
+                                            @if ($errors->has('street'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('street') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="form-group{{ $errors->has('number') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="input-email">{{ __('Número') }}</label>
+                                            <input type="number" name="number" id="input-number" class="form-control form-control-alternative{{ $errors->has('number') ? ' is-invalid' : '' }}" placeholder="{{ __('Número') }}" value="{{ old('number', auth()->user()->number) }}" required>
+        
+                                            @if ($errors->has('number'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('number') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="form-group{{ $errors->has('postal_code') ? ' has-danger' : '' }}">
+                                                <label class="form-control-label" for="input-postal_code">{{ __('CEP') }}</label>
+                                                <input type="text" name="postal_code" id="input-postal_code" class="form-control form-control-alternative{{ $errors->has('postal_code') ? ' is-invalid' : '' }}" placeholder="{{ __('CEP') }}" value="{{ old('postal_code', auth()->user()->postal_code) }}" required >
+            
+                                                @if ($errors->has('postal_code'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $errors->first('postal_code') }}</strong>
+                                                    </span>
+                                                @endif
+                                            </div>
+
+                                            <div class="form-group{{ $errors->has('complment') ? ' has-danger' : '' }}">
+                                                    <label class="form-control-label" for="input-complment">{{ __('Complemento') }}</label>
+                                                    <input type="text" name="complment" id="input-complment" class="form-control form-control-alternative{{ $errors->has('complment') ? ' is-invalid' : '' }}" placeholder="{{ __('Complemento') }}" value="{{ old('complment', auth()->user()->complment) }}" required >
+                
+                                                    @if ($errors->has('complment'))
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $errors->first('complment') }}</strong>
+                                                        </span>
+                                                    @endif
+                                                </div>
+
+                                                <div class="form-group{{ $errors->has('city') ? ' has-danger' : '' }}">
+                                                        <label class="form-control-label" for="input-city">{{ __('Cidade') }}</label>
+                                                        <input type="text" name="city" id="input-city" class="form-control form-control-alternative{{ $errors->has('city') ? ' is-invalid' : '' }}" placeholder="{{ __('Cidade') }}" value="{{ old('city', auth()->user()->city) }}" required >
+                    
+                                                        @if ($errors->has('city'))
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $errors->first('city') }}</strong>
+                                                            </span>
+                                                        @endif
+                                                    </div>
+
+
+                                                    <div class="form-group{{ $errors->has('state') ? ' has-danger' : '' }}">
+                                                            <label class="form-control-label" for="input-city">{{ __('Cidade') }}</label>
+                                                            <select class="form-control{{ $errors->has('state') ? ' is-invalid' : '' }} " name="state">
+                                                                    @foreach ($estados as $estado)
+                                                                    <option value="__({{explode(" – ", $estado)[1]}})">{{explode(" – ", $estado)[0]}}</option>
+                                                                    @endforeach
+                                                                </select>
+
+                                                            @if ($errors->has('state'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $errors->first('state') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+
+        
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                        <hr class="my-4" />
                         <form method="post" action="{{ route('profile.password') }}" autocomplete="off">
                             @csrf
                             @method('put')
 
-                            <h6 class="heading-small text-muted mb-4">{{ __('Password') }}</h6>
+                            <h6 class="heading-small text-muted mb-4">{{ __('Trocar Senha') }}</h6>
 
                             @if (session('password_status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -133,8 +295,8 @@
 
                             <div class="pl-lg-4">
                                 <div class="form-group{{ $errors->has('old_password') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-current-password">{{ __('Current Password') }}</label>
-                                    <input type="password" name="old_password" id="input-current-password" class="form-control form-control-alternative{{ $errors->has('old_password') ? ' is-invalid' : '' }}" placeholder="{{ __('Current Password') }}" value="" required>
+                                    <label class="form-control-label" for="input-current-password">{{ __('Senha Antiga') }}</label>
+                                    <input type="password" name="old_password" id="input-current-password" class="form-control form-control-alternative{{ $errors->has('old_password') ? ' is-invalid' : '' }}" value="" required>
                                     
                                     @if ($errors->has('old_password'))
                                         <span class="invalid-feedback" role="alert">
@@ -142,9 +304,10 @@
                                         </span>
                                     @endif
                                 </div>
+
                                 <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-password">{{ __('New Password') }}</label>
-                                    <input type="password" name="password" id="input-password" class="form-control form-control-alternative{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('New Password') }}" value="" required>
+                                    <label class="form-control-label" for="input-password">{{ __('Nova Senha') }}</label>
+                                    <input type="password" name="password" id="input-password" class="form-control form-control-alternative{{ $errors->has('password') ? ' is-invalid' : '' }}"  value="" required>
                                     
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
@@ -152,16 +315,19 @@
                                         </span>
                                     @endif
                                 </div>
+
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-password-confirmation">{{ __('Confirm New Password') }}</label>
-                                    <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-alternative" placeholder="{{ __('Confirm New Password') }}" value="" required>
+                                    <label class="form-control-label" for="input-password-confirmation">{{ __('Confirma Nova Senha') }}</label>
+                                    <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-alternative"  value="" required>
                                 </div>
 
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success mt-4">{{ __('Change password') }}</button>
                                 </div>
+
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
