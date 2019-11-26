@@ -9,6 +9,7 @@ use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Phone;
 use App\User;
+use App\WorkerCat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -22,8 +23,12 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        $telefones = DB::table('phones')->join('users', 'users.cpf', '=', 'phones.cpf_user')->select('phones.number as number', 'phones.id as id')->get();        $ocupacoes = Category::all();
-        return view('profile.edit', ['categorias' => $ocupacoes, 'telefones' => $telefones]);
+        $telefones = DB::table('phones')->join('users', 'users.cpf', '=', 'phones.cpf_user')->select('phones.number as number', 'phones.id as id')->get();        
+        $ocupacoes = Category::all();
+        $user_cat = DB::table('worker_cats')->join('users', 'users.cpf', '=', 'worker_cats.cpf_user')
+                                           ->join('categories', 'categories.id', '=', 'worker_cats.id_cat')
+                                           ->select('worker_cats.id as wc_id', 'categories.name as cat_name')->get();
+        return view('profile.edit', ['categorias' => $ocupacoes, 'telefones' => $telefones, 'worker_cats' => $user_cat]);
     }
 
     /**
@@ -63,6 +68,8 @@ class ProfileController extends Controller
         return back()->withStatus(__('Numeros Atualizados com Sucesso'));
     }
 
+   
+
     public function addPhone(Request $req){
         $telefone = $req->phone;
         $infos = array(
@@ -73,6 +80,22 @@ class ProfileController extends Controller
         $phone = Phone::create($infos);
 
         return redirect('profile')->withStatus(__('Numero inserido com sucesso'));
+    }
+
+    public function delCategory(Request $req){
+        WorkerCat::select()->where('id', '=',$req->id_wc)->delete();
+        return back()->withStatus(__('Categoria removida com sucesso'));
+    }
+
+    public function addCategory(Request $req){
+        $cat = $req->category;
+        $infos = array(
+            'id_cat' => $cat,
+            'cpf_user' => auth()->user()->cpf
+        );
+        $cat = WorkerCat::create($infos);
+
+        return redirect('profile')->withStatus(__('Categoria inserido com sucesso'));
     }
     /**
      * Change the password

@@ -22,8 +22,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
-	Route::post('profile', ['as' => 'profile.add.phone', 'uses' => 'ProfileController@addPhone']);
+
+	Route::post('profile/addPhone', ['as' => 'profile.add.phone', 'uses' => 'ProfileController@addPhone']);
+	Route::post('profile/addCat', ['as' => 'profile.add.category', 'uses' => 'ProfileController@addCategory']);
+	Route::delete('profile/update', ['as' => 'profile.del.category', 'uses' => 'ProfileController@delCategory']);
 	Route::put('profile', ['as' => 'profile.update.phone', 'uses' => 'ProfileController@editPhone']);
+
 	Route::put('profile/update', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 });
