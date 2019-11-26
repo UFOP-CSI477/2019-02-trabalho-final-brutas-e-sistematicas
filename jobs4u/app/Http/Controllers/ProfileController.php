@@ -7,8 +7,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 // use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\ProfileRequest;
+use App\Phone;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
@@ -20,8 +22,8 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        $ocupacoes = Category::all();
-        return view('profile.edit', ['categorias' => $ocupacoes]);
+        $telefones = DB::table('phones')->join('users', 'users.cpf', '=', 'phones.cpf_user')->select('phones.number as number', 'phones.id as id')->get();        $ocupacoes = Category::all();
+        return view('profile.edit', ['categorias' => $ocupacoes, 'telefones' => $telefones]);
     }
 
     /**
@@ -53,6 +55,25 @@ class ProfileController extends Controller
         }
     }
 
+    public function editPhone(Request $req){
+        foreach($req->phones as $index => $phone){
+            Phone::where('id', $req->oldPhones[$index])
+                 ->update(['number' => $phone]);
+        }
+        return back()->withStatus(__('Numeros Atualizados com Sucesso'));
+    }
+
+    public function addPhone(Request $req){
+        $telefone = $req->phone;
+        $infos = array(
+            'number' => $telefone,
+            'isWP' => true,
+            'cpf_user' => auth()->user()->cpf
+        );
+        $phone = Phone::create($infos);
+
+        return redirect('profile')->withStatus(__('Numero inserido com sucesso'));
+    }
     /**
      * Change the password
      *

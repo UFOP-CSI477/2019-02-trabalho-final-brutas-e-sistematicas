@@ -146,7 +146,7 @@
                         <hr class="my-4" />
 
                         <div class="card-body">
-                                <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
+                                <form method="post" action="{{ route('profile.update.phone') }}" autocomplete="off">
                                     @csrf
                                     @method('put')
         
@@ -156,10 +156,19 @@
                                     <div class="pl-lg-4">
                                         
                                         <div class="form-group{{ $errors->has('number') ? ' has-danger' : '' }}">
-                                                <label class="form-control-label" for="input-number">{{ __('Telefone') }}</label>
-                                                <input type="text" name="number" id="input-number" class="form-control form-control-alternative{{ $errors->has('number') ? ' is-invalid' : '' }}"  value="{{ old('surname', auth()->user()->number) }}" >
+                                            @if(count($telefones) > 0)
+                                                    <label class="form-control-label" for="input-number">{{ __('Telefone') }}</label>
+                                                    @foreach ($telefones as $tel)
+                                                        <input type="text" class="form-control mb-2" name="phones[]" value="{{ $tel->number }}">
+                                                        <input type="hidden" name="oldPhones[]" value="{{ $tel->id }}">
+                                                    @endforeach
+                                                @endif
+                                                <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#addPhone">
+                                                    Adicionar Novo Numero
+                                                </button>
                                                 <input type="hidden" name="name" value="{{ auth()->user()->name }}">
                                                 <input type="hidden" name="email" value="{{ auth()->user()->email }}">
+
                                             @if ($errors->has('number'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('number') }}</strong>
@@ -215,16 +224,6 @@
                                 @method('put')
     
                                 <h6 class="heading-small text-muted mb-4">{{ __('Informação do Job') }}</h6>
-                                
-                                {{-- @if (session('status'))
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        {{ session('status') }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                @endif --}}
-    
                                 
                                 <div class="pl-lg-4">
                                     
@@ -410,7 +409,39 @@
                 </div>
             </div>
         </div>
-        
+
+        <div class="modal fade" id="addPhone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Adicione aqui o numero do seu telefone</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        <form method="post" action="{{ route('profile.add.phone') }}" autocomplete="off">
+                                @csrf
+                                @method('post')
+    
+                                <div class="pl-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-phone">{{ __('Telefone') }}</label>
+                                        <input type="text" name="phone" id="input-phone" class="form-control form-control-alternative" placeholder="{{ __('Telefone') }}" required >
+                                    </div>    
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-success mt-4">{{ __('Salvar') }}</button>
+                                    </div>
+                                </div>
+                            </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
         @include('layouts.footers.auth')
     </div>
 @endsection
