@@ -1,14 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Category;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-// use App\Http\Requests\ProfileRequest;
+use Intervention\Image\ImageManager as Image;
 use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Phone;
-use App\User;
 use App\WorkerCat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,12 +20,21 @@ class ProfileController extends Controller
      */
     public function edit()
     {
+        $estados = array(
+            'Acre - AC', 'Alagoas - AL', 'Amapá - AP', 'Amazonas - AM', 
+            'Bahia - BA', 'Ceará - CE', 'Distrito Federal - DF', 'Espírito Santo - ES', 
+            'Goiás - GO', 'Maranhão - MA', 'Mato Grosso - MT', 'Mato Grosso do Sul - MS', 
+            'Minas Gerais - MG', 'Pará - PA', 'Paraíba - PB', 'Paraná - PR', 'Pernambuco - PE', 
+            'Piauí - PI', 'Roraima - RR', 'Rondônia - RO', 'Rio de Janeiro - RJ', 
+            'Rio Grande do Norte - RN', 'Rio Grande do Sul - RS', 'Santa Catarina - SC', 
+            'São Paulo - SP', 'Sergipe - SE', 'Tocantins - TO');
+
         $telefones = DB::table('phones')->join('users', 'users.cpf', '=', 'phones.cpf_user')->select('phones.number as number', 'phones.id as id')->get();        
         $ocupacoes = Category::all();
         $user_cat = DB::table('worker_cats')->join('users', 'users.cpf', '=', 'worker_cats.cpf_user')
                                            ->join('categories', 'categories.id', '=', 'worker_cats.id_cat')
                                            ->select('worker_cats.id as wc_id', 'categories.name as cat_name')->get();
-        return view('profile.edit', ['categorias' => $ocupacoes, 'telefones' => $telefones, 'worker_cats' => $user_cat]);
+        return view('profile.edit', ['categorias' => $ocupacoes, 'telefones' => $telefones, 'worker_cats' => $user_cat, 'estados' => $estados]);
     }
 
     /**
@@ -45,7 +51,9 @@ class ProfileController extends Controller
             $name = uniqid(date('HisYmd'));
             $extension = $request->file('picture')->extension();
             $nameFile = "{$name}.{$extension}";
+            Image::configure(array('driver' => 'imagick'));
             $upload = $request->file('picture')->move('src/img/user', $nameFile);
+            Image::make($upload, resize(400,400));
             if ( !$upload ){
                 return redirect('profile')->withErrors(['picture' => 'Não foi possível fazer upload de imagem']);
             }else{
@@ -77,7 +85,7 @@ class ProfileController extends Controller
             'isWP' => true,
             'cpf_user' => auth()->user()->cpf
         );
-        $phone = Phone::create($infos);
+        Phone::create($infos);
 
         return redirect('profile')->withStatus(__('Numero inserido com sucesso'));
     }

@@ -1,6 +1,4 @@
-@php $estados = array('Acre – AC', 'Alagoas – AL', 'Amapá – AP', 'Amazonas – AM', 'Bahia – BA', 'Ceará – CE', 'Distrito Federal – DF', 'Espírito Santo – ES', 'Goiás – GO', 'Maranhão – MA', 'Mato Grosso – MT', 'Mato Grosso do Sul – MS', 'Minas Gerais –
-MG', 'Pará – PA', 'Paraíba – PB', 'Paraná – PR', 'Pernambuco – PE', 'Piauí – PI', 'Roraima – RR', 'Rondônia – RO', 'Rio de Janeiro – RJ', 'Rio Grande do Norte – RN', 'Rio Grande do Sul – RS', 'Santa Catarina – SC', 'São Paulo – SP', 'Sergipe – SE', 'Tocantins
-– TO') @endphp @extends('layouts.app', ['title' => __('User Profile')]) @section('content') @include('users.partials.header', [ 'title' => __('Olá') . ' '. auth()->user()->name, 'description' => __('Essa é sua página. Aqui você pode editar suas informações
+@extends('layouts.app', ['title' => __('User Profile')]) @section('content') @include('users.partials.header', [ 'title' => __('Olá') . ' '. auth()->user()->name, 'description' => __('Essa é sua página. Aqui você pode editar suas informações
 !!!'), 'class' => 'col-lg-7' ])
 
 <div class="container-fluid mt--7">
@@ -281,10 +279,11 @@ MG', 'Pará – PA', 'Paraíba – PB', 'Paraná – PR', 'Pernambuco – PE', '
                                     <label class="form-control-label" for="input-city">{{ __('Estado') }}</label>
                                     <select class="form-control{{ $errors->has('state') ? ' is-invalid' : '' }} " name="state">
                                         @foreach ($estados as $estado)
-                                        <option value="{{explode(" – ", $estado)[1]}}" {{ auth()->user()->state == explode(" – ", $estado)[1] ? 'selected' : '' }}>
-                                            {{explode(" – ", $estado)[0]}}
+                                        <option value="{{explode(" - ", $estado)[1]}}" {{ auth()->user()->state == explode(" - ", $estado)[1] ? 'selected' : '' }}>
+                                            {{ __(explode(" - ", $estado)[0])}}
                                         </option>
-                                        @endforeach
+                          
+                                    @endforeach
                                     </select> @if ($errors->has('state'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('state') }}</strong>

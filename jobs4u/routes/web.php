@@ -10,9 +10,36 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Category;
 
 Route::get('/', function () {
-    return view('layouts.skill.index');
+	$topCategories = [
+		[
+			'nome' => 'Construção Civil',
+			'icon' => 'flaticon-idea',
+			'id'   => DB::table('categories')->select('id')->where('name', '=', 'Construção Civil')->get()
+		],
+		[
+			'nome' => 'Transporte Alternativo',
+			'icon' => 'flaticon-visitor',
+			'id'   => DB::table('categories')->select('id')->where('name', '=', 'Transporte Alternativo')->get()
+		],
+		[
+			'nome' => 'Limpeza Doméstica',
+			'icon' => 'flaticon-employees',
+			'id'   => DB::table('categories')->select('id')->where('name', '=', 'Limpeza Doméstica')->get()
+		],
+		[
+			'nome' => 'Informatica e Computadores',
+			'icon' => 'flaticon-contact',
+			'id'   => DB::table('categories')->select('id')->where('name', '=', 'Informatica e Computadores')->get()
+		],
+	];
+
+	// dd($topCategories[0]['nome']);
+	$cidades = DB::table('users')->select('city as name')->distinct()->get();
+	$cat = Category::all();
+    return view('layouts.skill.index', ['categories' => $cat, 'cidades' => $cidades, 'topCat' => $topCategories]);
 })->name('welcome');
 
 Auth::routes();
