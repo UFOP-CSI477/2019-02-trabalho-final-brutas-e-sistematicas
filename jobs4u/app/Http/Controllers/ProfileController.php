@@ -1,14 +1,13 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Category;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-// use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\ProfileRequest;
-use App\User;
+use App\Phone;
+use App\WorkerCat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
@@ -20,8 +19,21 @@ class ProfileController extends Controller
      */
     public function edit()
     {
+        $estados = array(
+            'Acre - AC', 'Alagoas - AL', 'Amapá - AP', 'Amazonas - AM', 
+            'Bahia - BA', 'Ceará - CE', 'Distrito Federal - DF', 'Espírito Santo - ES', 
+            'Goiás - GO', 'Maranhão - MA', 'Mato Grosso - MT', 'Mato Grosso do Sul - MS', 
+            'Minas Gerais - MG', 'Pará - PA', 'Paraíba - PB', 'Paraná - PR', 'Pernambuco - PE', 
+            'Piauí - PI', 'Roraima - RR', 'Rondônia - RO', 'Rio de Janeiro - RJ', 
+            'Rio Grande do Norte - RN', 'Rio Grande do Sul - RS', 'Santa Catarina - SC', 
+            'São Paulo - SP', 'Sergipe - SE', 'Tocantins - TO');
+
+        $telefones = DB::table('phones')->join('users', 'users.cpf', '=', 'phones.cpf_user')->select('phones.number as number', 'phones.id as id')->get();        
         $ocupacoes = Category::all();
-        return view('profile.edit', ['categorias' => $ocupacoes]);
+        $user_cat = DB::table('worker_cats')->join('users', 'users.cpf', '=', 'worker_cats.cpf_user')
+                                           ->join('categories', 'categories.id', '=', 'worker_cats.id_cat')
+                                           ->select('worker_cats.id as wc_id', 'categories.name as cat_name')->get();
+        return view('profile.edit', ['categorias' => $ocupacoes, 'telefones' => $telefones, 'worker_cats' => $user_cat, 'estados' => $estados]);
     }
 
     /**
@@ -53,6 +65,43 @@ class ProfileController extends Controller
         }
     }
 
+    public function editPhone(Request $req){
+        foreach($req->phones as $index => $phone){
+            Phone::where('id', $req->oldPhones[$index])
+                 ->update(['number' => $phone]);
+        }
+        return back()->withStatus(__('Numeros Atualizados com Sucesso'));
+    }
+
+   
+
+    public function addPhone(Request $req){
+        $telefone = $req->phone;
+        $infos = array(
+            'number' => $telefone,
+            'isWP' => true,
+            'cpf_user' => auth()->user()->cpf
+        );
+        Phone::create($infos);
+
+        return redirect('profile')->withStatus(__('Numero inserido com sucesso'));
+    }
+
+    public function delCategory(Request $req){
+        WorkerCat::select()->where('id', '=',$req->id_wc)->delete();
+        return back()->withStatus(__('Categoria removida com sucesso'));
+    }
+
+    public function addCategory(Request $req){
+        $cat = $req->category;
+        $infos = array(
+            'id_cat' => $cat,
+            'cpf_user' => auth()->user()->cpf
+        );
+        $cat = WorkerCat::create($infos);
+
+        return redirect('profile')->withStatus(__('Categoria inserido com sucesso'));
+    }
     /**
      * Change the password
      *
