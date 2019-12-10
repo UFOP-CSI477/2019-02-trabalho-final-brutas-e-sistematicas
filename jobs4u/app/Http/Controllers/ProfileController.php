@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use Intervention\Image\ImageManager as Image;
 use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Phone;
@@ -51,9 +50,7 @@ class ProfileController extends Controller
             $name = uniqid(date('HisYmd'));
             $extension = $request->file('picture')->extension();
             $nameFile = "{$name}.{$extension}";
-            Image::configure(array('driver' => 'imagick'));
             $upload = $request->file('picture')->move('src/img/user', $nameFile);
-            Image::make($upload, resize(400,400));
             if ( !$upload ){
                 return redirect('profile')->withErrors(['picture' => 'Não foi possível fazer upload de imagem']);
             }else{
