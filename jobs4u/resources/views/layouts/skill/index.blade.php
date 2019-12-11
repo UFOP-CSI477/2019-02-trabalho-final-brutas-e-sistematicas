@@ -1,7 +1,7 @@
 @extends('layouts.index')
 @section('conteudo')
 
-<div class="hero-wrap img" style="background-image: url(images/bg_1.jpg);">
+<div class="hero-wrap">
     <div class="overlay"></div>
     <div class="container">
         <div class="row d-md-flex no-gutters slider-text align-items-center justify-content-center">
@@ -147,24 +147,6 @@
                 </div>
         @endforeach
         </div>
-        {{-- @foreach ($catCount as $index => $cat)
-            @if(( array_search($index, array_keys($catCount->toArray() )) + 1) % 4 == 0)
-            </ul>  
-              </div>
-                <div class="col-md-12 ftco-animate">
-                    <ul class="category text-center">
-                      <li><a href="#"> {{ $index }} <br><span class="number">{{ $cat->count() }}</span> <span>Profissionais</span><i class="ion-ios-arrow-forward"></i></a></li>
-            @elseif(( array_search($index, array_keys($catCount->toArray() )) +1 ) % 4 == 1)
-              <div class="col-md- ftco-animate">
-                  <ul class="category text-center">
-                      <li><a href="#"> {{ $index }} <br><span class="number">{{ $cat->count() }}</span> <span>Profissionais</span><i class="ion-ios-arrow-forward"></i></a></li>
-            @else
-                <li><a href="#"> {{ $index }} <br><span class="number">{{ $cat->count() }}</span> <span>Profissionais</span><i class="ion-ios-arrow-forward"></i></a></li>
-            @endif
-        @endforeach
-        </div> --}}
- 
-      </div>
       </div>
   </section>
 
@@ -213,7 +195,7 @@
 
   <footer class="ftco-footer ftco-bg-dark ftco-section">
     <div class="container">
-      <div class="row mb-5">
+      {{-- <div class="row mb-5">
           <div class="col-md">
            <div class="ftco-footer-widget mb-4">
             <h2 class="ftco-heading-2">Skillhunt Jobboard</h2>
@@ -274,31 +256,14 @@
               </div>
           </div>
         </div>
-      </div>
+      </div> --}}
       <div class="row">
         <div class="col-md-12 text-center">
-
-          <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+          <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
         </div>
       </div>
     </div>
   </footer>
 
-<script>
-function getLocation(){
-  if (navigator.geolocation){
-    console.log(navigator.geolocation.getCurrentPosition(showPosition));
-  }else{
-    console.log("O seu navegador não suporta Geolocalização.");
-  }
-}
-function showPosition(position){
-  console.log(position)
-}
-</script>
-      
-      
-      Read more: http://www.linhadecodigo.com.br/artigo/3653/usando-geolocalizacao-com-html5.aspx#ixzz66QQzmpvf
+</div>
 @endsection
