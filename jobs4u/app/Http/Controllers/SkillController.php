@@ -59,7 +59,8 @@ class SkillController extends Controller
                        ->select('u.name', 'u.city', 'u.description', 'u.state', 'u.cpf', 'u.picture')
                        ->where('w.id_cat', '=', $cat->id)
                        ->get();
-        dd($workers);
+     
+        return view('layouts.skill.candidates',['allworkers' => $workers]);
 
     }
 }
