@@ -14,7 +14,7 @@ use App\Category;
 
 Route::get('/', 'SkillController@index')->name('welcome');
 Route::get('categoria/workers/{cat}', 'SkillController@workersByCategorie')->name('workersByCategorie');
-Route::get('worker/contact', 'SkillController@workerContact')->name('workerContact');
+Route::get('worker/contact/{user}', 'SkillController@workerContact')->name('workerContact');
 
 
 

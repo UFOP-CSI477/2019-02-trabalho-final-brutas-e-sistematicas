@@ -49,5 +49,6 @@
   <script src="{{ asset('skill') }}/js/google-map.js"></script>
   <script src="{{ asset('skill') }}/js/main.js"></script>
     
+  @yield('scripts')
   </body>
 </html>

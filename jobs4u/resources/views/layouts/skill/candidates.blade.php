@@ -21,12 +21,14 @@
 
                         <div class="col-md-6">
                                 <div class="team d-md-flex p-4 bg-white">
-                                <div class="img" style="background-image: {{$w->picture}};"></div>
+                                <div class="img">
+                                  <img class="img-fluid" src="{{ asset($w->picture) }}" alt="" srcset="">
+                                </div>
                                 <div class="text pl-md-4">
                                 <span class="location mb-0">{{$w->city}}, {{$w->state}}</span>
                                 <h2>{{$w->name}}</h2>
                                 <p class="mb-2">{{$w->description}}</p>
-                                    <button type="submit" class="btn btn-primary">Saiba Mais</button>
+                                  <a href="{{ route('workerContact', ['user' => $w->cpf] )}}"><button type="submit" class="btn btn-primary">Saiba Mais</button></a>
                                 </div>
                             </div>
                          </div>
