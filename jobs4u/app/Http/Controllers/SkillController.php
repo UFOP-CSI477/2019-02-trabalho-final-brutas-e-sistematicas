@@ -62,4 +62,9 @@ class SkillController extends Controller
         dd($workers);
 
     }
+
+    public function workerContact(User $user){
+        $phones = DB::table('phones')->where('cpf_user', '=', $user->cpf);
+        return view('layouts.skill.contact', compact('user', 'phones'));
+    }
 }
