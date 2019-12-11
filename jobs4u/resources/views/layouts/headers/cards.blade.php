@@ -3,7 +3,9 @@
         <div class="header-body">
             <!-- Card stats -->
             <div class="row">
-                <div class="col-xl-3 col-lg-6">
+                <h1 class="text-center">Bem vindo à Área Administrativa</h1>
+                    <h2 class="bold text-center text-white">Não se esqueça de adicionar sua foto, telefone e descrição no Seu Perfil. Desta forma seus clientes se informam sobre suas experiencias, habilidades e encontram um meio de comunicação para fechar contratos!</h2>
+                {{-- <div class="col-xl-3 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
                             <div class="row">
@@ -86,7 +88,7 @@
                             </p>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
