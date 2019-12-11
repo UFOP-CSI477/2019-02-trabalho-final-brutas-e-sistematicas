@@ -12,40 +12,16 @@
 */
 use App\Category;
 
-Route::get('/', function () {
-	$topCategories = [
-		[
-			'nome' => 'Construção Civil',
-			'icon' => 'flaticon-idea',
-			'id'   => DB::table('categories')->select('id')->where('name', '=', 'Construção Civil')->get()
-		],
-		[
-			'nome' => 'Transporte Alternativo',
-			'icon' => 'flaticon-visitor',
-			'id'   => DB::table('categories')->select('id')->where('name', '=', 'Transporte Alternativo')->get()
-		],
-		[
-			'nome' => 'Limpeza Doméstica',
-			'icon' => 'flaticon-employees',
-			'id'   => DB::table('categories')->select('id')->where('name', '=', 'Limpeza Doméstica')->get()
-		],
-		[
-			'nome' => 'Informatica e Computadores',
-			'icon' => 'flaticon-contact',
-			'id'   => DB::table('categories')->select('id')->where('name', '=', 'Informatica e Computadores')->get()
-		],
-	];
+Route::get('/', 'SkillController@index')->name('welcome');
+Route::get('categoria/workers/{cat}', 'SkillController@workersByCategorie')->name('workersByCategorie');
 
-	// dd($topCategories[0]['nome']);
-	$cidades = DB::table('users')->select('city as name')->distinct()->get();
-	$cat = Category::all();
-    return view('layouts.skill.index', ['categories' => $cat, 'cidades' => $cidades, 'topCat' => $topCategories]);
-})->name('welcome');
+
+
+
+
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
-
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);

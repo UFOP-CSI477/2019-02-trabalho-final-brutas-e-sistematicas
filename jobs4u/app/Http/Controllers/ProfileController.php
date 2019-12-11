@@ -32,7 +32,9 @@ class ProfileController extends Controller
         $ocupacoes = Category::all();
         $user_cat = DB::table('worker_cats')->join('users', 'users.cpf', '=', 'worker_cats.cpf_user')
                                            ->join('categories', 'categories.id', '=', 'worker_cats.id_cat')
-                                           ->select('worker_cats.id as wc_id', 'categories.name as cat_name')->get();
+                                           ->select('worker_cats.id as wc_id', 'categories.name as cat_name')
+                                           ->where('users.cpf', '=', auth()->user()->cpf)
+                                           ->get();
         return view('profile.edit', ['categorias' => $ocupacoes, 'telefones' => $telefones, 'worker_cats' => $user_cat, 'estados' => $estados]);
     }
 
